@@ -1089,7 +1089,7 @@ string randomStrGen(int length) {
              + "\nrpcpassword="
              + randomStrGen(15)
              + "\n#(0=off, 1=on) staking - turn staking on or off"
-             + "\nstak=1"
+             + "\nstaking=1"
              + "\nrpcallowip=127.0.0.1"
              + "\nlisten=1"
              + "\ndaemon=1"

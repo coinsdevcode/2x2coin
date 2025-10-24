@@ -15,10 +15,10 @@
         <location line="+41"/>
         <source>Copyright © 2009-2014 The Bitcoin developers
 Copyright © 2012-2014 The NovaCoin developers
-Copyright © 2014 The 2X2 developers</source>
+Copyright © 2018-2025 The 2X2Coin developers</source>
         <translation>Все права защищены © 2009-2014 Разработчики Bitcoin
 Все права защищены © 2012-2014 Разработчики NovaCoin
-Все права защищены © 2014 Разработчики 2X2</translation>
+Все права защищены © 2018-2025 The 2X2Coin developers</translation>
     </message>
     <message>
         <location line="+15"/>

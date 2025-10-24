@@ -861,7 +861,7 @@ void ThreadSocketHandler2(void* parg)
 
                     if (nPos > ReceiveBufferSize()) {
                         if (!pnode->fDisconnect)
-                            printf("socket recv flood control disconnect (%"PRIszu" bytes)\n", vRecv.size());
+                            printf("socket recv flood control disconnect (%" PRIszu " bytes)\n", vRecv.size());
                         pnode->CloseSocketDisconnect();
                     }
                     else {
@@ -1118,6 +1118,10 @@ void MapPort()
 // The second name should resolve to a list of seed addresses.
 static const char *strDNSSeed[][2] = {
 	{"176.222.52.79","176.222.52.79"},
+	{"220.119.152.100","220.119.152.100"},
+	{"62.171.183.244","62.171.183.244"},
+	{"92.119.123.221","92.119.123.221"},
+	{"95.217.78.81","95.217.78.81"},
 	{"75.119.137.26","75.119.137.26"},
 	{"138.122.48.56","138.122.48.56"},
 	{"177.204.190.11","177.204.190.11"},

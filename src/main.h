@@ -1112,7 +1112,7 @@ public:
     int nHeight;
 
     int64_t nMint;
-    int64_t nMoneySupply;
+    __int128 nMoneySupply;
 
     unsigned int nFlags;  // ppcoin: block index flags
     enum  

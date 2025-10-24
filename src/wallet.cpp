@@ -899,7 +899,7 @@ void CWallet::ReacceptWalletTransactions()
                 // Update fSpent if a tx got spent somewhere else by a copy of wallet.dat
                 if (txindex.vSpent.size() != wtx.vout.size())
                 {
-                    printf("ERROR: ReacceptWalletTransactions() : txindex.vSpent.size() %"PRIszu" != wtx.vout.size() %"PRIszu"\n", txindex.vSpent.size(), wtx.vout.size());
+                    printf("ERROR: ReacceptWalletTransactions() : txindex.vSpent.size() %" PRIszu " != wtx.vout.size() %" PRIszu "\n", txindex.vSpent.size(), wtx.vout.size());
                     continue;
                 }
                 for (unsigned int i = 0; i < txindex.vSpent.size(); i++)
@@ -1022,9 +1022,9 @@ void CWallet::ResendWalletTransactions(bool fForce)
 //
 
 
-CBigNum CWallet::GetBalance() const
+__int128 CWallet::GetBalance() const
 {
-    CBigNum nTotal(0);
+    __int128 nTotal = 0;
     {
         LOCK(cs_wallet);
         for (map<uint256, CWalletTx>::const_iterator it = mapWallet.begin(); it != mapWallet.end(); ++it)
@@ -1355,7 +1355,10 @@ bool CWallet::SelectCoinsSimple(int64_t nTargetValue, unsigned int nSpendTime, i
         }
         else if (n < nTargetValue + CENT)
         {
-            setCoinsRet.insert(coin.second);
+            __int128 tmp = nValueRet;
+            if ((tmp + coin.first) > (std::numeric_limits<int64_t>::max() - COIN))
+                break;
+			setCoinsRet.insert(coin.second);
             nValueRet += coin.first;
         }
     }
@@ -1501,7 +1504,7 @@ bool CWallet::CreateTransaction(CScript scriptPubKey, int64_t nValue, CWalletTx&
 bool CWallet::GetStakeWeight(const CKeyStore& keystore, uint64_t& nMinWeight, uint64_t& nMaxWeight, uint64_t& nWeight)
 {
     // Choose coins to use
-    int64_t nBalance = GetBalance().getuint64();
+    __int128 nBalance = GetBalance();
 
     if (nBalance <= nReserveBalance)
         return false;
@@ -1511,7 +1514,10 @@ bool CWallet::GetStakeWeight(const CKeyStore& keystore, uint64_t& nMinWeight, ui
     set<pair<const CWalletTx*, unsigned int> > setCoins;
     int64_t nValueIn = 0;
 
-    if (!SelectCoinsSimple(nBalance - nReserveBalance, GetTime(), nCoinbaseMaturity + 10, setCoins, nValueIn))
+    if (nBalance > (std::numeric_limits<int64_t>::max() - COIN))
+         nBalance = std::numeric_limits<int64_t>::max() - COIN;	
+
+	if (!SelectCoinsSimple(nBalance - nReserveBalance, GetTime(), nCoinbaseMaturity + 10, setCoins, nValueIn))
         return false;
 
     if (setCoins.empty())
@@ -1567,7 +1573,7 @@ bool CWallet::CreateCoinStake(const CKeyStore& keystore, unsigned int nBits, int
     txNew.vout.push_back(CTxOut(0, scriptEmpty));
 
     // Choose coins to use
-    int64_t nBalance = GetBalance().getuint64();
+    __int128 nBalance = GetBalance();
 
     if (nBalance <= nReserveBalance)
         return false;
@@ -1577,7 +1583,10 @@ bool CWallet::CreateCoinStake(const CKeyStore& keystore, unsigned int nBits, int
     set<pair<const CWalletTx*,unsigned int> > setCoins;
     int64_t nValueIn = 0;
 
-    // Select coins with suitable depth
+    if (nBalance > (std::numeric_limits<int64_t>::max() - COIN))
+        nBalance = std::numeric_limits<int64_t>::max() - COIN;	
+
+	// Select coins with suitable depth
     if (!SelectCoinsSimple(nBalance - nReserveBalance, txNew.nTime, nCoinbaseMaturity + 10, setCoins, nValueIn))
         return false;
 
@@ -2023,7 +2032,7 @@ bool CWallet::TopUpKeyPool(unsigned int nSize)
             if (!walletdb.WritePool(nEnd, CKeyPool(GenerateNewKey())))
                 throw runtime_error("TopUpKeyPool() : writing generated key failed");
             setKeyPool.insert(nEnd);
-            printf("keypool added key %" PRId64 ", size=%"PRIszu"\n", nEnd, setKeyPool.size());
+            printf("keypool added key %" PRId64 ", size=%" PRIszu "\n", nEnd, setKeyPool.size());
         }
     }
     return true;
@@ -2255,7 +2264,7 @@ set< set<CTxDestination> > CWallet::GetAddressGroupings()
 
 // ppcoin: check 'spent' consistency between wallet and txindex
 // ppcoin: fix wallet spent state according to txindex
-void CWallet::FixSpentCoins(int& nMismatchFound, int64_t& nBalanceInQuestion, bool fCheckOnly)
+void CWallet::FixSpentCoins(int64_t& nMismatchFound, __int128& nBalanceInQuestion, bool fCheckOnly)
 {
     nMismatchFound = 0;
     nBalanceInQuestion = 0;

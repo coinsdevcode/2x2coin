@@ -180,7 +180,7 @@ public:
     int ScanForWalletTransaction(const uint256& hashTx);
     void ReacceptWalletTransactions();
     void ResendWalletTransactions(bool fForce = false);
-    CBigNum GetBalance() const;
+    __int128 GetBalance() const;
     CBigNum GetUnconfirmedBalance() const;
     CBigNum GetImmatureBalance() const;
     CBigNum GetStake() const;
@@ -311,7 +311,7 @@ public:
     // get the current wallet format (the oldest client version guaranteed to understand this wallet)
     int GetVersion() { return nWalletVersion; }
 
-    void FixSpentCoins(int& nMismatchSpent, int64_t& nBalanceInQuestion, bool fCheckOnly = false);
+    void FixSpentCoins(int64_t& nMismatchSpent, __int128& nBalanceInQuestion, bool fCheckOnly = false);
     void DisableTransaction(const CTransaction &tx);
 
     /** Address book entry changed.

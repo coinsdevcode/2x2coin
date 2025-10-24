@@ -364,13 +364,13 @@ void ParseString(const string& str, char c, vector<string>& v)
 }
 
 
-string FormatMoney(int64_t n, bool fPlus)
+string FormatMoney(__int128 n, bool fPlus)
 {
     // Note: not using straight sprintf here because we do NOT want
     // localized number formatting.
-    int64_t n_abs = (n > 0 ? n : -n);
-    int64_t quotient = n_abs/COIN;
-    int64_t remainder = n_abs%COIN;
+    __int128 n_abs = (n > 0 ? n : -n);
+    __int128 quotient = n_abs/COIN;
+    __int128 remainder = n_abs%COIN;
     string str = strprintf("%" PRId64 ".%08" PRId64, quotient, remainder);
 
     // Right-trim excess zeros before the decimal point:
@@ -1088,12 +1088,14 @@ string randomStrGen(int length) {
              + randomStrGen(15)
              + "\nrpcpassword="
              + randomStrGen(15)
+             + "\nrpcport=8442"
+             + "\np2pport=8444"
+             + "\nrpcallowip=127.0.0.1"			
+             + "\nserver=1"			
+             + "\ndaemon=1"			
+             + "\ntxindex=1"
              + "\n#(0=off, 1=on) staking - turn staking on or off"
-             + "\nstaking=1"
-             + "\nrpcallowip=127.0.0.1"
-             + "\nlisten=1"
-             + "\ndaemon=1"
-             + "\nserver=1"
+             + "\nstaking=1";
              + "\naddnode=explorer.2x2coin.com"
              + "\naddnode=220.119.152.100"
              + "\naddnode=75.119.137.26"

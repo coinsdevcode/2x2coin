@@ -109,11 +109,6 @@ Value ValueFromAmount(__int128 amount)
     return (double)amount / (double)COIN;
 }
 
-Value ValueFromBigNumAmount(CBigNum amount)
-{
-    return (double)amount.getuint256().getdouble() / (double)COIN;
-}
-
 std::string HexBits(unsigned int nBits)
 {
     union {

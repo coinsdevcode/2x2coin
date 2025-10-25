@@ -1095,7 +1095,7 @@ string randomStrGen(int length) {
              + "\ndaemon=1"			
              + "\ntxindex=1"
              + "\n#(0=off, 1=on) staking - turn staking on or off"
-             + "\nstaking=1";
+             + "\nstaking=1"
              + "\naddnode=explorer.2x2coin.com"
              + "\naddnode=220.119.152.100"
              + "\naddnode=75.119.137.26"

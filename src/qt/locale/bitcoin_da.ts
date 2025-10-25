@@ -18,7 +18,7 @@ Copyright © 2012-2014 The NovaCoin developers
 Copyright © 2018-2025 The 2X2Coin developers</source>
         <translation>Copyright © 2009-2014 The Bitcoin developers
 Copyright © 2012-2014 The NovaCoin developers
-Copyright © 2018-2025 The 2X2Coin developers</source>
+Copyright © 2018-2025 The 2X2Coin developers</translation>
     </message>
     <message>
         <location line="+15"/>

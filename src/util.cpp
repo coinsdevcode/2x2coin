@@ -1095,7 +1095,7 @@ void createConf()
             + "\ndaemon=1"			
             + "\ntxindex=1"
             + "\n#(0=off, 1=on) staking - turn staking on or off"
-            + "\nstaking=1";
+            + "\nstaking=0";
     pConf.close();
 }
 

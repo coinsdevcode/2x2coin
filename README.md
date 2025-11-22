@@ -1,14 +1,14 @@
 # 2x2coin
 
 
-https://2x2coin.space     Official Website
-http://2x2block.space     ( Blockexplorer including API )
+https://2x2coin.com     Official Website
+https://explorer.2x2com.com     ( Blockexplorer including API )
 
 Windows wallet https://github.com/2X2coin/2x2coin/raw/master/release/2X2-qt.exe
 
 ## How to compile and use the Linux Deamon
-Tested and working on Ubtunu 14 - 16.04 and 17.  Version 16.04 is recommended.
-Versions 18.04 and later do not currently compile due to changes in OpenSSL 1.1
+Tested and working on Ubtunu 14 - 16.04 and 18.  Version 16.04 is recommended.
+Versions 20.04 and later do not currently compile due to changes in OpenSSL 1.1
 and the Boost C++ library in that version.
 
 ### Swapfile
@@ -34,21 +34,27 @@ sudo echo '/swapfile none swap sw 0 0' >> /etc/fstab
 ### Install all required dependencies
 
 ```sudo apt-get update && sudo apt-get upgrade
-sudo apt-get -y install nano ntp unzip git build-essential libssl-dev \ 
-  libdb-dev libdb++-dev libboost-all-dev libqrencode-dev aptitude
+sudo apt-get -y install nano ntp unzip git build-essential libssl-dev
+sudo apt-get -y install libdb-dev libdb++-dev libboost-all-dev libqrencode-dev aptitude
 sudo aptitude -y install miniupnpc libminiupnpc-dev
+```
+ubuntu 18.04
+```
+sudo apt-get install libssl1.0-dev
+sudo apt-get install libqt4-dev
 ```
 If you get an error mentioning lock files, you probably have a desktop or background package update tool running that prevents other apt changes from happening.  You can use the ```lsof``` utility to figure out what program holds the lock and then pause it from running.
 
 Pull the source code from github, or download it yourself:
 ```
-git clone https://github.com/2X2coin/2x2coin.git
+git clone https://github.com/coinsdevcode/2x2coin.git
 ```
 
 ### Compiling the software
 
 Now you compile the included leveldb:
 ```
+chmod 777 -R 2x2coin
 cd 2x2coin/src/leveldb
 chmod +x build_detect_platform
 make clean
@@ -66,7 +72,7 @@ sudo cp 2X2d /usr/bin
 ```
 Now run the daemon:
 ```
-X2d
+2X2d
 ```
 It should return an error, telling you to set up config file in a directory. 
 
@@ -83,10 +89,24 @@ server=1
 rpcuser=(username)
 rpcpassword=(strong password)
 ```
+
+## To compile qt (wallet with GUI) for Ubuntu 16.04 or 18.04 LTS use:
+```
+sudo apt-get install qt5-default qt5-qmake qtbase5-dev-tools qttools5-dev-tools
+sudo apt-get install libboost-system-dev
+sudo apt-get install libboost-filesystem-dev libboost-program-options-dev libboost-thread-dev
+```
+Return to the source directory, and compile the qt:
+```
+cd ..
+qmake RELEASE=1
+make STATIC=1
+```
+
 Run 2X2d once more and if you did everything correctly, your daemon is now online! 
 ## Command summary
 Type:
 ```
-YOURCOINd help
+2X2d help
 ```
 for a full list of commands available.

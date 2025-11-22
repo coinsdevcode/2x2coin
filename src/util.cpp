@@ -371,7 +371,7 @@ string FormatMoney(__int128 n, bool fPlus)
     __int128 n_abs = (n > 0 ? n : -n);
     __int128 quotient = n_abs/COIN;
     __int128 remainder = n_abs%COIN;
-    string str = strprintf("%" PRId64 ".%08" PRId64, quotient, remainder);
+    std::string str = strprintf("%" PRId64 ".%08" PRId64, (__int128)quotient, (__int128)remainder);
 
     // Right-trim excess zeros before the decimal point:
     int nTrim = 0;

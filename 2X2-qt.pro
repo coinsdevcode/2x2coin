@@ -24,6 +24,18 @@ greaterThan(QT_MAJOR_VERSION, 4) {
 #    BOOST_INCLUDE_PATH, BOOST_LIB_PATH, BDB_INCLUDE_PATH,
 #    BDB_LIB_PATH, OPENSSL_INCLUDE_PATH and OPENSSL_LIB_PATH respectively
 
+#uncomment the following section to enable building on windows:
+#BOOST_LIB_SUFFIX=-mgw49-mt-s-1_55
+#BOOST_INCLUDE_PATH=C:/deps/boost_1_55_0
+#BOOST_LIB_PATH=C:/deps/boost_1_55_0/stage/lib
+#BDB_INCLUDE_PATH=C:/deps/db-6.0.30/build_unix
+#BDB_LIB_PATH=C:/deps/db-6.0.30/build_unix
+#OPENSSL_INCLUDE_PATH=C:/deps/openssl-1.0.2u/include
+#OPENSSL_LIB_PATH=C:/deps/openssl-1.0.2u
+#MINIUPNPC_INCLUDE_PATH=C:/deps/
+#MINIUPNPC_LIB_PATH=C:/deps/miniupnpc
+#QRENCODE_INCLUDE_PATH=C:/deps/qrencode-3.4.3
+#QRENCODE_LIB_PATH=C:/deps/qrencode-3.4.3/.libs
 OBJECTS_DIR = build
 MOC_DIR = build
 UI_DIR = build
@@ -41,8 +53,9 @@ contains(RELEASE, 1) {
 
 !win32 {
 # for extra security against potential buffer overflows: enable GCCs Stack Smashing Protection
-QMAKE_CXXFLAGS *= -fstack-protector-all --param ssp-buffer-size=1
-QMAKE_LFLAGS *= -fstack-protector-all --param ssp-buffer-size=1
+CONFIG += x86_64
+QMAKE_CXXFLAGS *= -m64 -fstack-protector-all --param ssp-buffer-size=1
+QMAKE_LFLAGS *= -m64 -fstack-protector-all --param ssp-buffer-size=1
 # We need to exclude this for Windows cross compile with MinGW 4.2.x, as it will result in a non-working executable!
 # This can be enabled for Windows, when we switch to MinGW >= 4.4.x.
 }

@@ -56,7 +56,6 @@ Now you compile the included leveldb:
 ```
 chmod 777 -R 2x2coin
 cd 2x2coin/src/leveldb
-chmod +x build_detect_platform
 make clean
 make libleveldb.a libmemenv.a
 ```
